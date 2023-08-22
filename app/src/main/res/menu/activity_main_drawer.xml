@@ -6,15 +6,40 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/home_icon"
             android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/profile_icon"
+            android:title="@string/menu_profile" />
+
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/history_icon"
+            android:title="@string/menu_history" />
+
+        <item
+            android:visible="false"
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_baseline_message_24"
+            android:title="@string/menu_message" />
+
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:icon="@drawable/about_us_icon"
+            android:title="@string/menu_about" />
+
     </group>
+
+    <item android:title="Support" android:visible="false">
+        <menu>
+            <item
+                android:id="@+id/nav_Rate"
+                android:icon="@drawable/ic_baseline_star_rate_24"
+                android:title="Rate This App" />
+
+        </menu>
+    </item>
+
 </menu>

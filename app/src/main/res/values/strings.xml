@@ -1,13 +1,32 @@
 <resources>
-    <string name="app_name">MS GROUP</string>
+    <string name="app_name">MS Group Security</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">MS GROUP</string>
+    <string name="nav_header_subtitle">Your safety is our priority</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Admin</string>
+
+    <string name="app_version">Version 1.2.0 beta</string>
+    <string name="app_about_slogan">MS GROUP Security Services is a dynamic and innovative company committed to providing innovative security solutions to both our clients and candidates.We pride ourselves in providing a full range of Security Management Services and committed to continually improve the contents and quality. Well qualified and experienced professionals are dedicated for the growth and improvement of the security services.</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_gallery">About Us</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_about">About Us</string>
+    <string name="menu_message">Messages</string>
+    <string name="menu_history">History</string>
+    <string name="menu_profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
+    <string name="channel_name">New Help Request</string>
+    <string name="channel_description">There is a new help request</string>
+    <string name="notification_title">New Help Request</string>
+    <string name="notification_description">There is a new help request</string>
+
+    <string name="location_disclosure_header">For our SOS response team to know exactly where to rescues you, you must allow MS GROUP to use your location all the time.</string>
+    <string name="location_disclosure_sub_header">MS GROUP will use location in the background so we can pin point you when we have to send SOS response team</string>
+
 </resources>

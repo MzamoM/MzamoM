@@ -1,4 +1,4 @@
-package com.sos.msgroup.ui.gallery
+package com.sos.msgroup.ui.about
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.sos.msgroup.databinding.FragmentGalleryBinding
+import com.sos.msgroup.databinding.FragmentAboutUsBinding
 
-class GalleryFragment : Fragment() {
+class AboutUsFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentAboutUsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,13 +24,9 @@ class GalleryFragment : Fragment() {
     ): View {
         val galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentAboutUsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
     }
 

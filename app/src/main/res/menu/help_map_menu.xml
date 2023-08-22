@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+       <item
+        android:id="@+id/action_close_report"
+        android:icon="@drawable/close_icon"
+        android:title="CLOSE REQUEST"
+        app:showAsAction="always"/>
+
+       <item
+           android:id="@+id/action_call"
+           android:icon="@drawable/call_icon"
+           android:title="CLOSE REQUEST"
+           app:showAsAction="always"/>
+
+</menu>
