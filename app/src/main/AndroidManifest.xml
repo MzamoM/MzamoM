@@ -46,6 +46,11 @@
             android:name=".EditUserActivity"
             android:exported="false" />
         <activity
+            android:name=".ResetPasswordActivity"
+            android:label="@string/app_name"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
