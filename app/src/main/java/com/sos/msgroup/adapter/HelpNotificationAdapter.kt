@@ -1,6 +1,8 @@
 package com.sos.msgroup.adapter
+
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +17,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HelpNotificationAdapter(var context: Context, var helpNotificationList: ArrayList<HelpNotification>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HelpNotificationAdapter(
+    var context: Context,
+    var helpNotificationList: ArrayList<HelpNotification>,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private inner class ViewHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -24,14 +28,21 @@ class HelpNotificationAdapter(var context: Context, var helpNotificationList: Ar
         var name: TextView = itemView.findViewById(R.id.TvNames)
         var date: TextView = itemView.findViewById(R.id.TvDateTime)
         var image: ImageView = itemView.findViewById(R.id.ImgLocation)
+        var imageIconStatus: ImageView = itemView.findViewById(R.id.ImgIconStatus)
 
         fun bind(position: Int) {
 
             val fmt: NumberFormat = NumberFormat.getCurrencyInstance()
 
-            name.text = helpNotificationList[position].firstName + " "+helpNotificationList[position].lastName
+            name.text =
+                helpNotificationList[position].firstName + " " + helpNotificationList[position].lastName
             date.text = epochToIso(helpNotificationList[position].time.toLong())
 
+            if (helpNotificationList[position].viewed) {
+                imageIconStatus.visibility = View.GONE
+            } else {
+                imageIconStatus.visibility = View.VISIBLE
+            }
 
             itemView.setOnClickListener { _ ->
                 val intent = Intent(context, MapsActivity::class.java)

@@ -1,6 +1,7 @@
 package com.sos.msgroup.model
 
 import android.os.Parcelable
+import android.widget.ImageView
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -14,6 +15,8 @@ data class HelpNotification(
     var isActive: Boolean,
     var time: String,
     var comment: String,
+    var viewed: Boolean
+
 ) : Parcelable {
-    constructor() : this("", "", "", "", "", "", true, "","")
+    constructor() : this("", "", "", "", "", "", true, "","",false)
 }

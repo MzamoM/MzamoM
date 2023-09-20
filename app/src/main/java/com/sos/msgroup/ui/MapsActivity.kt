@@ -57,6 +57,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun initializeDbRef() {
         database =  FirebaseDatabase.getInstance().reference
         getRequestedUserDetails()
+
+        updateViewedStatus()
     }
 
     private fun getRequestedUserDetails() {
@@ -64,9 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var myRef: DatabaseReference = database.child("users").child(helpNotification.userId)
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                 user = dataSnapshot.getValue(User::class.java)!!
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -160,6 +160,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
         }
+    }
+
+    private fun updateViewedStatus(){
+        if (this::helpNotification.isInitialized) {
+            helpNotification.viewed = true
+            database.child("requests").child(helpNotification.requestId).setValue(helpNotification).addOnSuccessListener {
+            }.addOnFailureListener {
+                showMsg(it.toString())
+            }
+        }else{
+            showMsg("Something went wrong")
+        }
+
     }
 
     private fun cancelHelpRequest(message:String,comment:String){

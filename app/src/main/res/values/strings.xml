@@ -26,7 +26,7 @@
     <string name="notification_title">New Help Request</string>
     <string name="notification_description">There is a new help request</string>
 
-    <string name="location_disclosure_header">For our SOS response team to know exactly where to rescues you, you must allow MS GROUP to use your location all the time.</string>
+    <string name="location_disclosure_header">For our SOS response team to know exactly where to rescue you, you must allow MS GROUP to use your location all the time.</string>
     <string name="location_disclosure_sub_header">MS GROUP will use location in the background so we can pin point you when we have to send SOS response team</string>
 
 </resources>

@@ -79,9 +79,7 @@ public class FCMReceiver extends FirebaseMessagingService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, AdminNotificationActivity.class), 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                //.setContentTitle(getString(R.string.app_name))
                 .setContentTitle(getString(R.string.notification_title))
-                //.setSmallIcon(R.drawable.ic_notification_icon)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentText(remoteMessage.getData().get("body"))
                 .setOnlyAlertOnce(true)

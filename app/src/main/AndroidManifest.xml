@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MSGROUP"
         tools:targetApi="31">
+
         <activity
             android:name=".UserManagementActivity"
             android:exported="false" />
@@ -79,14 +80,13 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.MSGROUP.NoActionBar"></activity>
 
-        <service
-            android:name=".notification.FCMReceiver"
-            android:enabled="true"
-            android:exported="true">
+        <service android:name=".notification.MyFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
     </application>
 
 </manifest>

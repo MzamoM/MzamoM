@@ -20,8 +20,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sos.msgroup.databinding.ActivityMainBinding
 import com.sos.msgroup.model.User
+import com.sos.msgroup.notification.MyFirebaseMessagingService
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +34,12 @@ class MainActivity : AppCompatActivity() {
     private var isCurrentUserAdmin: Boolean = false
 
     private lateinit var database: DatabaseReference
+
+    companion object {
+        private const val TAG = "MainActivity"
+        private const val topic_toSubscribe = "_help_request"
+        private const val NOTIFICATION_REQUEST_CODE = 1234
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +68,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         initializeDbRef()
+    }
 
+    fun subscribeTopics() {
+        MyFirebaseMessagingService.subscribeTopic(this@MainActivity,topic_toSubscribe)
     }
 
     private fun signOut() {
@@ -96,6 +107,10 @@ class MainActivity : AppCompatActivity() {
                 if (user != null) {
                     isCurrentUserAdmin = user.type.lowercase() != "customer"
                     invalidateOptionsMenu()
+
+                    if(isCurrentUserAdmin){
+                        subscribeTopics()
+                    }
 
                 } else {
                     showMsg("Unknown user")
