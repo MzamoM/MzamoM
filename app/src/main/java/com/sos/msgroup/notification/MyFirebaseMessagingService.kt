@@ -1,15 +1,17 @@
 package com.sos.msgroup.notification
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessaging
@@ -17,12 +19,14 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sos.msgroup.AdminNotificationActivity
 import com.sos.msgroup.R
-import com.sos.msgroup.model.HelpNotification
-import com.sos.msgroup.ui.MapsActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.io.*
+import java.io.BufferedOutputStream
+import java.io.BufferedWriter
+import java.io.InputStream
+import java.io.OutputStream
+import java.io.OutputStreamWriter
 import java.net.URL
 import java.util.Random
 import javax.net.ssl.HttpsURLConnection
@@ -32,6 +36,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     companion object {
         var token : String? = null
+        var random = Random()
+
+        val CHANNEL_ID = "channelID"
+        val CHANNEL_NAME = "channelName"
+        val NOTIF_ID = 0
 
         private const val key : String = "AAAAqMDbzEw:APA91bH6yVd7Mv6B8kBc0qACJVw3xE8OZdf21tEmscQdG-GPqwW9S4mbOrdimOyXgJkNxBBAshTDTi7tMiju6v0J0-x0GXH0zjx2Bd4Sotbtx0dE8mnwsT4T8ZxI51ODP-nOt_iLQisY"
 
@@ -109,53 +118,88 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
         Log.e("onMessageReceived: ", p0.data.toString())
+        // checking if android version is greater than oreo(API 26) or not
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //createNotificationChannel()
+            showNotificationNew(p0.data.get("title").toString(),p0.data.get("content").toString())
+        }else{
+            try {
+                val title = p0.data.get("title")
+                val content = p0.data.get("content")
+                val defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                val contentIntent = PendingIntent.getActivity(this, 0, Intent(this,AdminNotificationActivity::class.java), 0)
 
-        var random = Random()
+                val notification = NotificationCompat.Builder(applicationContext,"1")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title)
+                    .setContentText(content)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setSound(defaultSound)
+                    .setContentIntent(contentIntent)
+                    .setColor(ContextCompat.getColor(this, R.color.notification_red))
 
-        try {
-            val title = p0.data.get("title")
-            val content = p0.data.get("content")
-            val defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                val notificationManager : NotificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.notify(random.nextInt() + 1000,notification.build())
 
-            val contentIntent = PendingIntent.getActivity(this, 0, Intent(this,AdminNotificationActivity::class.java), 0)
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                checkNotificationChannel("1")
+            }catch (e: Exception){
+                e.printStackTrace()
             }
-
-            val notification = NotificationCompat.Builder(applicationContext,"1")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(content)
-
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setSound(defaultSound)
-                .setContentIntent(contentIntent)
-                .setColor(ContextCompat.getColor(this, R.color.notification_red))
-
-            val notificationManager : NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.notify(random.nextInt() + 1000,notification.build())
-
-
-        }catch (e: Exception){
-            e.printStackTrace()
         }
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun checkNotificationChannel(CHANNEL_ID:String) {
+    private fun showNotificationNew(title: String,content: String){
 
-        val notificationChannel = NotificationChannel(CHANNEL_ID,
-            getString(R.string.channel_name),
-            NotificationManager.IMPORTANCE_HIGH)
-        notificationChannel.description = getString(R.string.channel_description)
-        notificationChannel.enableLights(true)
-        notificationChannel.enableVibration(true)
-        val notificationManager = getSystemService(NotificationManager::class.java)
-        notificationManager.createNotificationChannel(notificationChannel)
+        // declaring variables
+        lateinit var notificationChannel: NotificationChannel
+        lateinit var builder: Notification.Builder
+        val channelId = "i.apps.notifications"
+        val description = "Test notification"
+
+        var notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val contentIntent = PendingIntent.getActivity(this, 0, Intent(this,AdminNotificationActivity::class.java), 0)
+
+        // checking if android version is greater than oreo(API 26) or not
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.GREEN
+            notificationChannel.enableVibration(false)
+            notificationManager.createNotificationChannel(notificationChannel)
+
+            builder = Notification.Builder(this, channelId)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setContentIntent(contentIntent)
+        }
+        notificationManager.notify(1234, builder.build())
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+                enableLights(true)
+                lightColor = Color.RED
+                enableVibration(true)
+                vibrationPattern =longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+
+            }
+
+            // Register the channel with the system.
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     override fun onNewToken(p0: String) {
         token = p0
         super.onNewToken(p0)

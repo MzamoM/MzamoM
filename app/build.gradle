@@ -4,6 +4,8 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id "kotlin-parcelize"
+    // Add the following configuration:
+    id 'com.huawei.agconnect'
 }
 
 android {
@@ -14,10 +16,12 @@ android {
         applicationId "com.sos.msgroup"
         minSdk 24
         targetSdk 33
-        versionCode 15
+        versionCode 28
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        resConfigs "en"
     }
 
     buildTypes {
@@ -41,6 +45,11 @@ android {
 
 dependencies {
 
+    implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
+    implementation 'com.google.android.gms:play-services-ads:23.0.0'
+    def picassoVersion = "2.71828"
+    def circleImageViewVersion = "2.2.0"
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
@@ -49,12 +58,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation 'com.google.firebase:firebase-database:20.0.4'
-    implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'com.google.firebase:firebase-database:20.2.2'
+    implementation 'com.google.firebase:firebase-auth:22.1.2'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    implementation 'com.google.firebase:firebase-common-ktx:20.3.2'
-    implementation 'com.google.firebase:firebase-messaging:23.1.2'
+    implementation 'com.google.firebase:firebase-common-ktx:20.4.0'
+    implementation 'com.google.firebase:firebase-messaging:23.2.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -64,5 +73,14 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
 
+    //Picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
+
+    implementation 'com.huawei.hms:iap:6.13.0.300'
+
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
 
 }

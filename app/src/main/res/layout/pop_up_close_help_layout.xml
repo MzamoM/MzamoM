@@ -19,11 +19,39 @@
             android:inputType="text|textMultiLine"
             android:textAlignment="center"/>
 
+
+        <LinearLayout
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/attachvideo"
+                android:layout_width="65dp"
+                android:layout_height="50dp"/>
+
+            <ImageView
+                android:layout_marginRight="8dp"
+                android:src="@drawable/attachimage"
+                android:layout_width="40dp"
+                android:layout_height="50dp"/>
+
+            <ImageView
+                android:src="@drawable/attachdocument"
+                android:layout_width="35dp"
+                android:layout_height="50dp"/>
+
+
+        </LinearLayout>
+
+
+
         <Button
             android:text="SAVE"
             android:layout_gravity="center"
             android:id="@+id/btnSaveWithComment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="20sp" />

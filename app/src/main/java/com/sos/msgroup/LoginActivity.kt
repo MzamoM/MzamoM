@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
 
             auth.signInWithEmailAndPassword(email.trim(), password.trim()).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+
                     progressDialog.dismiss()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)

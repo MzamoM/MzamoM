@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,9 +27,7 @@ class UserManagementActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_managment)
 
         findViewByIds()
-
         getUsers()
-
     }
 
    /* private fun performSearch() {
@@ -98,6 +95,8 @@ class UserManagementActivity : AppCompatActivity() {
                         usersList.add(user)
                     }
                 }
+
+                usersList.reverse()
 
                 val layoutManager = GridLayoutManager(this@UserManagementActivity, 1)
 

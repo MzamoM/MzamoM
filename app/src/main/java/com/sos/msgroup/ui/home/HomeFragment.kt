@@ -1,21 +1,25 @@
 package com.sos.msgroup.ui.home
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
-import com.sos.msgroup.databinding.FragmentHomeBinding
+
 import android.annotation.SuppressLint
 import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.view.size
+import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,10 +27,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.sos.msgroup.R
+import com.sos.msgroup.databinding.FragmentHomeBinding
 import com.sos.msgroup.model.HelpNotification
 import com.sos.msgroup.model.User
 import com.sos.msgroup.notification.MyFirebaseMessagingService
-
 import java.util.*
 
 
@@ -54,6 +58,7 @@ class HomeFragment : Fragment() {
     ): View {
 
         initializeDbRef()
+       // activity?.let { MobileAds.initialize(it){} }
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -61,18 +66,14 @@ class HomeFragment : Fragment() {
         val helpImage: ImageView = binding.imgCallHelp
         val cancelHelpImage: ImageView = binding.imgCancelHelp
 
+        loadBanner()
 
+
+        //initialize location provides
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         locationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager?
 
-        try {
-            // Request location updates
-            locationManager?.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener
-            )
-        } catch (ex: SecurityException) {
-            showMsg("Security Exception, no location available")
-        }
+        requestLocation()
 
         helpImage.setOnClickListener { view ->
 
@@ -83,7 +84,13 @@ class HomeFragment : Fragment() {
                         startPosting(helpImage, cancelHelpImage, view)
                     } else {
 
-                        mFusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                        requestLocation()
+
+                        if(this::userCurrentLocation.isInitialized && userCurrentLocation != null){
+                            startPosting(helpImage, cancelHelpImage, view)
+
+                        }else{
+                            mFusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                                 if (location != null) {
                                     userCurrentLocation = location
                                     startPosting(helpImage, cancelHelpImage, view)
@@ -93,6 +100,9 @@ class HomeFragment : Fragment() {
                                     )
                                 }
                             }
+                        }
+
+
                     }
                 }
             } catch (e: Exception) {
@@ -111,6 +121,30 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    private fun loadBanner() {
+        // This is an ad unit ID for a test ad. Replace with your own banner ad unit ID.
+      //  binding.adView.adUnitId = "ca-app-pub-3940256099942544/9214589741"
+       // binding.adView.size
+
+        // Create an ad request.
+        val adRequest = AdRequest.Builder().build()
+
+        // Start loading the ad in the background.
+        binding.adView.loadAd(adRequest)
+    }
+
+
+    private fun requestLocation() {
+        try {
+            // Request location updates
+            locationManager?.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener
+            )
+        } catch (ex: SecurityException) {
+            showMsg(ex.toString())
+        }
+    }
+
     private fun startPosting(helpImage: ImageView, cancelHelpImage: ImageView, view: View) {
 
         helpImage.visibility = View.GONE
@@ -126,15 +160,15 @@ class HomeFragment : Fragment() {
             database.push().key.toString(),
             true,
             System.currentTimeMillis().toString(),
-            "I need help urgent urgency"
+            "I need help urgent",
+            currentUser.profileImage
         )
 
     }
 
     private fun getCurrentUserDetails() {
 
-        var myRef: DatabaseReference =
-            database.child("users").child(FirebaseAuth.getInstance()?.uid.toString())
+        var myRef: DatabaseReference =  database.child("users").child(FirebaseAuth.getInstance()?.uid.toString())
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -171,9 +205,10 @@ class HomeFragment : Fragment() {
         isActive: Boolean,
         time: String,
         comment: String,
+        userProlePic: String,
     ) {
         request = HelpNotification(
-            userId, firstName, lastName, latitude, longitude, requestId, isActive, time, comment,false
+            userId, firstName, lastName, latitude, longitude, requestId, isActive, time, comment,false,userProlePic
         )
         database.child("requests").child(request.requestId).setValue(request).addOnSuccessListener {
             postNotification()

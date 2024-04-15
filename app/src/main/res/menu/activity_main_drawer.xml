@@ -20,10 +20,10 @@
             android:title="@string/menu_history" />
 
         <item
-            android:visible="false"
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_baseline_message_24"
-            android:title="@string/menu_message" />
+            android:id="@+id/nav_emergency"
+            android:icon="@drawable/emergency_icon"
+            android:title="@string/menu_emergency" />
+
 
         <item
             android:id="@+id/nav_gallery"

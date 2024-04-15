@@ -7,81 +7,136 @@
     android:padding="@dimen/fab_margin"
     tools:context=".ui.profile.ProfileFragment">
 
-    <LinearLayout
-        android:layout_alignParentStart="true"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/profileImagesSetting"
-            android:layout_gravity="center"
-            android:layout_width="150dp"
-            android:layout_height="150sp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_default_user" />
-
-        <EditText
-            android:id="@+id/editTextFirstName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittextbackground"
-            android:ems="10"
-            android:hint="First name"
-            android:inputType="textPersonName"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp"/>
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittextbackground"
-            android:ems="10"
-            android:hint="Last name"
-            android:inputType="textPersonName"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp"/>
 
-        <EditText
-            android:id="@+id/editTextIDNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittextbackground"
-            android:ems="10"
-            android:hint="ID Number"
-            android:inputType="textPersonName"
-            android:padding="10dp"
-            android:maxLength="13"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImagesSetting"
+                android:layout_width="150dp"
+                android:layout_height="150sp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_default_user" />
 
-        <EditText
-            android:id="@+id/editTextPhoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittextbackground"
-            android:ems="10"
-            android:maxLength="10"
-            android:hint="Phone number"
-            android:inputType="number"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="8dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20sp"
+                android:background="@android:color/darker_gray" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:hint="First name"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black" />
 
-    <Button
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="SAVE"
-        android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:hint="Last name"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/editTextIDNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:hint="ID Number"
+                android:inputType="textPersonName"
+                android:maxLength="13"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/editTextPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:hint="Phone number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/next_of_kin_detail"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextNextKinFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittextbackground"
+                android:hint="Next of kin first name"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/editTextNextKinLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittextbackground"
+                android:hint="Next of kin last name"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/editTextNextKinPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:hint="Next of kin phone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="10dp"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="SAVE"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

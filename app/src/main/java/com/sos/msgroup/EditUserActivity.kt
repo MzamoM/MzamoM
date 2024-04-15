@@ -1,18 +1,30 @@
 package com.sos.msgroup
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.sos.msgroup.model.User
+import com.squareup.picasso.Picasso
+
 class EditUserActivity : AppCompatActivity() {
 
     private lateinit var editTextFirstName: EditText
     private lateinit var editTextLastName: EditText
     private lateinit var editTextEmail: EditText
     private lateinit var editTextPhoneNumber: EditText
+
+    private lateinit var editTextNextKinFirstNameEdit: EditText
+    private lateinit var editTextNextKinLastNameEdit: EditText
+    private lateinit var editTextNextKinPhoneEdit: EditText
+    private lateinit var profilePictureImageViewEdit : ImageView
     private lateinit var buttonSaveProfile: Button
+    private lateinit var buttonDeleteProfile: Button
 
     private lateinit var role: String
     private lateinit var user: User
@@ -28,6 +40,34 @@ class EditUserActivity : AppCompatActivity() {
         role = user.type
 
         findViewByIds()
+
+        updateViewedStatus()
+    }
+
+    private fun deleteUserAccount(email: String, password: String) {
+
+        val database = FirebaseDatabase.getInstance().reference.child("users")
+        database.child(user.id).removeValue().addOnSuccessListener {
+            showMsg("User was deleted")
+        }.addOnFailureListener {
+            showMsg(it.toString())
+            return@addOnFailureListener
+        }
+    }
+
+    private fun updateViewedStatus(){
+        if (this::user.isInitialized) {
+            user.userCaptured = true
+
+            val database = FirebaseDatabase.getInstance().reference.child("users")
+            database.child(user.id).setValue(user).addOnSuccessListener {
+            }.addOnFailureListener {
+                showMsg(it.toString())
+            }
+        }else{
+            showMsg("Something went wrong")
+        }
+
     }
 
     private fun findViewByIds() {
@@ -36,6 +76,13 @@ class EditUserActivity : AppCompatActivity() {
         editTextEmail = findViewById(R.id.edtEmailAddressEdit)
         editTextPhoneNumber = findViewById(R.id.edtPhoneEdit)
         buttonSaveProfile = findViewById(R.id.btnSaveProfileEdit)
+        buttonDeleteProfile = findViewById(R.id.btnDeleteProfileEdit)
+
+        editTextNextKinFirstNameEdit = findViewById(R.id.editTextNextKinFirstNameEdit)
+        editTextNextKinLastNameEdit = findViewById(R.id.editTextNextKinLastNameEdit)
+        editTextNextKinPhoneEdit = findViewById(R.id.editTextNextKinPhoneEdit)
+        profilePictureImageViewEdit = findViewById(R.id.img_UserProfilePictureEdit)
+
         radioGroup = findViewById(R.id.rdg_roles)
 
 
@@ -59,9 +106,31 @@ class EditUserActivity : AppCompatActivity() {
             saveUserInfo()
         })
 
+        buttonDeleteProfile.setOnClickListener(View.OnClickListener {
+            deleteUserAccount(user.email,user.password)
+        })
+
     }
 
     private fun showUserDetails() {
+
+        if (user.profileImage != null && user.profileImage.isNotEmpty()) {
+            Picasso.get().load(user.profileImage)
+                .placeholder(R.drawable.ic_default_user)
+                .into(profilePictureImageViewEdit)
+        }
+
+        if (user.nextKinFirstName!!.isNotBlank()) {
+            editTextNextKinFirstNameEdit.setText(user.nextKinFirstName)
+        }
+
+        if (user.nextKinLastName!!.isNotBlank()) {
+            editTextNextKinLastNameEdit.setText(user.nextKinLastName)
+        }
+
+        if (user.nextKinPhone!!.isNotBlank()) {
+            editTextNextKinPhoneEdit.setText(user.nextKinPhone)
+        }
 
         if (user.firstName!!.isNotBlank()) {
             editTextFirstName.setText(user.firstName)

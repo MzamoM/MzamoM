@@ -2,6 +2,7 @@ package com.sos.msgroup
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -14,13 +15,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.messaging.FirebaseMessaging
 import com.sos.msgroup.databinding.ActivityMainBinding
 import com.sos.msgroup.model.User
 import com.sos.msgroup.notification.MyFirebaseMessagingService
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private var isCurrentUserAdmin: Boolean = false
 
     private lateinit var database: DatabaseReference
+    private lateinit var user: User
 
     companion object {
         private const val TAG = "MainActivity"
@@ -59,13 +61,15 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_home,
                 R.id.nav_gallery,
-                R.id.nav_slideshow,
                 R.id.nav_profile,
-                R.id.nav_history
+                R.id.nav_history,
+                R.id.nav_emergency
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
 
         initializeDbRef()
     }
@@ -85,24 +89,23 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
 
-        menu.getItem(2).isVisible = isCurrentUserAdmin
+        menu.findItem(R.id.action_settings).isVisible = isCurrentUserAdmin
 
         return true
     }
 
     private fun initializeDbRef() {
         database = FirebaseDatabase.getInstance().reference
-
         getCurrentUserRole()
     }
 
     private fun getCurrentUserRole() {
 
-        var myRef: DatabaseReference =
-            database.child("users").child(FirebaseAuth.getInstance()?.uid.toString())
+        var myRef: DatabaseReference = database.child("users").child(FirebaseAuth.getInstance()?.uid.toString())
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue(User::class.java)
+
+                 user = dataSnapshot.getValue(User::class.java)!!
 
                 if (user != null) {
                     isCurrentUserAdmin = user.type.lowercase() != "customer"
@@ -131,6 +134,23 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> {
                 val intent = Intent(this, AdminNotificationActivity::class.java)
                 startActivity(intent)
+                true
+            }
+
+            R.id.action_delete -> {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Please confirm")
+                    setMessage("Are you sure you want to delete your account?")
+
+                    setPositiveButton("Yes") { _, _ ->
+                        deleteUserAccount(user.email,user.password)
+                    }
+
+                    setNegativeButton("No") { _, _ ->
+                    }
+
+                    setCancelable(true)
+                }.create().show()
                 true
             }
 
@@ -180,6 +200,31 @@ class MainActivity : AppCompatActivity() {
     private fun showMsg(msg: String) {
         val toast = Toast.makeText(this, msg, Toast.LENGTH_LONG)
         toast.show()
+    }
+
+    private fun deleteUserAccount(email: String, password: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+
+        // Get auth credentials from the user for re-authentication. The example below shows
+        // email and password credentials but there are multiple possible providers,
+        // such as GoogleAuthProvider or FacebookAuthProvider.
+        val credential = EmailAuthProvider.getCredential(email, password)
+
+        // Prompt the user to re-provide their sign-in credentials
+        user?.reauthenticate(credential)?.addOnCompleteListener {
+            user.delete()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        showMsg("Deleted User Successfully,")
+                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                        finish()
+                    }else{
+                        showMsg("User account not deleted")
+                    }
+
+
+                }
+        }
     }
 
 }

@@ -48,6 +48,10 @@ class RegisterActivity : AppCompatActivity() {
             binding.editTextRegFirstName.error = "Firstname required"
         } else if (binding.editTextRegLastName.text.isNullOrBlank()) {
             binding.editTextRegLastName.error = "Lastname required"
+        } else if (binding.editTextPhoneNumber.text.isNullOrBlank()) {
+            binding.editTextPhoneNumber.error = "Phone number required"
+        } else if (binding.editTextPhoneNumber.text.isNotEmpty() && binding.editTextPhoneNumber.text.length != 10) {
+            binding.editTextPhoneNumber.error = "Invalid Phone number"
         } else {
             progressDialog.show()
 
@@ -55,6 +59,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.editTextPassword.text.toString()
             val firstName = binding.editTextRegFirstName.text.toString()
             val lastName = binding.editTextRegLastName.text.toString()
+            val phone = binding.editTextPhoneNumber.text.toString()
 
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -64,9 +69,12 @@ class RegisterActivity : AppCompatActivity() {
                         firstName,
                         lastName,
                         "male",
-                        "",
+                        phone,
                         email,
-                        FirebaseAuth.getInstance()?.uid.toString()
+                        FirebaseAuth.getInstance()?.uid.toString(),
+                        "",
+                        false,
+                        "","","",""
                     )
                     saveNewUser(user)
                 }
@@ -87,9 +95,9 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }.addOnFailureListener {
-                showMsg(it.toString())
-                progressDialog.dismiss()
-            }
+            showMsg(it.toString())
+            progressDialog.dismiss()
+        }
 
     }
 

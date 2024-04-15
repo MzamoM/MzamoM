@@ -2,16 +2,19 @@ package com.sos.msgroup.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sos.msgroup.R
 import com.sos.msgroup.model.HelpNotification
 import com.sos.msgroup.ui.MapsActivity
+import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,13 +47,51 @@ class HelpNotificationAdapter(
                 imageIconStatus.visibility = View.VISIBLE
             }
 
+
+
+            if (helpNotificationList[position].userProfilePic != null && helpNotificationList[position].userProfilePic.isNotEmpty()) {
+                Picasso.get().load(helpNotificationList[position].userProfilePic)
+                    .placeholder(R.drawable.ic_default_user)
+                    .into(image)
+            }
+
+
             itemView.setOnClickListener { _ ->
                 val intent = Intent(context, MapsActivity::class.java)
                 intent.putExtra("helpRequested", helpNotificationList[position])
                 context.startActivity(intent)
             }
 
+            image.setOnClickListener { _ ->
+                showPopup(helpNotificationList[position])
+            }
+
         }
+    }
+
+    fun showPopup(helpData:HelpNotification) {
+        val popupView: View = LayoutInflater.from(context).inflate(R.layout.user_help_profile_popup, null)
+        val popupWindow = PopupWindow(
+            popupView,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+
+        val btnDismiss = popupView.findViewById<View>(R.id.btnClosePopUp) as Button
+        var userPictureImageView = popupView.findViewById<View>(R.id.profileImagesSettingPopUp) as de.hdodenhof.circleimageview.CircleImageView
+        var userFullNameTextView = popupView.findViewById<View>(R.id.tvUserHelpFullName) as TextView
+
+
+        userFullNameTextView.text = helpData.firstName +" "+ helpData.lastName
+
+        if(helpData.userProfilePic !=null && helpData.userProfilePic.isNotEmpty()){
+            Picasso.get().load(helpData.userProfilePic)
+                .placeholder(R.drawable.ic_default_user)
+                .into(userPictureImageView)
+        }
+
+        btnDismiss.setOnClickListener { popupWindow.dismiss() }
+        popupWindow.showAsDropDown(popupView, 0, 0)
     }
 
     private fun epochToIso(dobInMiles: Long): String {

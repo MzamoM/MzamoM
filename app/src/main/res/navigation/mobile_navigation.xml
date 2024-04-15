@@ -6,6 +6,11 @@
     app:startDestination="@+id/nav_home">
 
     <fragment
+        android:id="@+id/nav_emergency"
+        android:name="com.sos.msgroup.ui.emergency.EmergencyNumbersFragment"
+        android:label="@string/menu_emergency"
+        tools:layout="@layout/fragment_emergency_numbers" />
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.sos.msgroup.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
@@ -29,9 +34,4 @@
         android:label="@string/menu_history"
         tools:layout="@layout/fragment_help_history" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.sos.msgroup.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>

@@ -20,11 +20,19 @@ class UserAdapter(var context: Context, var usersList: ArrayList<User>) :
 
         var textViewUserFullName: TextView = itemView.findViewById(R.id.tv_UserFullName)
         var imageViewStoreLogo: ImageView = itemView.findViewById(R.id.img_UserImage)
+        var imageViewUserIconStatus: ImageView = itemView.findViewById(R.id.ImgUserIconStatus)
 
         fun bind(position: Int) {
 
             if (usersList[position].firstName != null && usersList[position].firstName!!.isNotEmpty()) {
-                textViewUserFullName.text = usersList[position].firstName + " "+usersList[position].lastName
+                textViewUserFullName.text =
+                    usersList[position].firstName + " " + usersList[position].lastName
+            }
+
+            if (!usersList[position].userCaptured) {
+                imageViewUserIconStatus.visibility = View.VISIBLE
+            } else {
+                imageViewUserIconStatus.visibility = View.GONE
             }
 
             itemView.setOnClickListener { _ ->
