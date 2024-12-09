@@ -95,11 +95,11 @@ class AdminNotificationActivity : AppCompatActivity() {
 
                 val layoutManager = GridLayoutManager(this@AdminNotificationActivity, 1)
 
-                helpNotificationAdapter = this@AdminNotificationActivity?.let {
+                helpNotificationAdapter = this@AdminNotificationActivity.let {
                     HelpNotificationAdapter(
                         it, helpNotifications
                     )
-                }!!
+                }
                 recyclerView.setHasFixedSize(true)
                 recyclerView.layoutManager = layoutManager
                 recyclerView.adapter = helpNotificationAdapter

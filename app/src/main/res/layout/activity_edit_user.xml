@@ -124,6 +124,12 @@
                 android:text="Customer" />
 
             <RadioButton
+                android:id="@+id/rb_roleSecurity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Security" />
+
+            <RadioButton
                 android:id="@+id/rb_roleAdmin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -36,6 +36,8 @@
                 android:layout_toRightOf="@+id/img_UserImage"
                 android:text="Thamsanqa Shabalala" />
 
+
+
             <ImageView
                 android:id="@+id/ImgUserIconStatus"
                 android:layout_width="20dp"

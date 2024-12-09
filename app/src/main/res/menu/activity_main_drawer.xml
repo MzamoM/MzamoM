@@ -20,6 +20,17 @@
             android:title="@string/menu_history" />
 
         <item
+            android:id="@+id/nav_payment"
+            android:icon="@drawable/payment_icon"
+            android:title="@string/menu_payment" />
+
+        <item
+            android:visible="false"
+            android:id="@+id/nav_subscription"
+            android:icon="@drawable/payment_icon"
+            android:title="@string/menu_subscription" />
+
+        <item
             android:id="@+id/nav_emergency"
             android:icon="@drawable/emergency_icon"
             android:title="@string/menu_emergency" />
@@ -29,6 +40,8 @@
             android:id="@+id/nav_gallery"
             android:icon="@drawable/about_us_icon"
             android:title="@string/menu_about" />
+
+
 
     </group>
 

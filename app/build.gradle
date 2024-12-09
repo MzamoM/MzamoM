@@ -10,14 +10,14 @@ plugins {
 
 android {
     namespace 'com.sos.msgroup'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sos.msgroup"
         minSdk 24
-        targetSdk 33
-        versionCode 28
-        versionName "1.0"
+        targetSdk 34
+        versionCode 37
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -47,6 +47,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
     implementation 'com.google.android.gms:play-services-ads:23.0.0'
+    implementation 'androidx.activity:activity:1.8.0'
     def picassoVersion = "2.71828"
     def circleImageViewVersion = "2.2.0"
 
@@ -82,5 +83,8 @@ dependencies {
 
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+
+    //Flutter wave payment SDK
+    implementation 'com.github.flutterwave.rave-android:rave_android:2.1.39'
 
 }

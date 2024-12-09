@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Admin</string>
 
-    <string name="app_version">Version 1.1.8</string>
+    <string name="app_version">Version 1.1.9</string>
     <string name="app_about_slogan">MS GROUP Security Services is a dynamic and innovative company committed to providing innovative security solutions to both our clients and candidates.We pride ourselves in providing a full range of Security Management Services and committed to continually improve the contents and quality. Well qualified and experienced professionals are dedicated for the growth and improvement of the security services.</string>
 
     <string name="menu_home">Home</string>
@@ -33,5 +33,27 @@
 
     <string name="adUnitId_test">ca-app-pub-3940256099942544/9214589741</string>
     <string name="adUnitId_live">ca-app-pub-4883562730747584/4411313216</string>
+    <string name="menu_website">Web Site</string>
+    <string name="menu_payment">Payment</string>
+
+
+    <string name="text_flutter_wave_public_key">FLWPUBK_TEST-c27b28c39d97de7da1b3023be3461f60-X</string>
+    <string name="text_flutter_wave_secret_key">FLWSECK_TEST-ccb2fa2da999d238af5fd31f7e784b46-X</string>
+    <string name="text_flutter_wave_encryption_key">FLWSECK_TESTe10e69d67726</string>
+    <string name="menu_subscription">subscription</string>
+    <string name="title_activity_online_security_maps">Online Security</string>
+    <string name="action_online_security">Online Security</string>
+
+    <string name="spinner_prompt">Select Monitor Category</string>
+
+    <string-array name="spinner_items">
+        <item>Select</item>
+        <item>E-hailing</item>
+        <item>Municipal</item>
+        <item>Government</item>
+        <item>Business Fleet</item>
+        <item>Courier</item>
+        <item>Personal Use</item>
+    </string-array>
 
 </resources>

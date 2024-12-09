@@ -16,8 +16,9 @@ data class HelpNotification(
     var time: String,
     var comment: String,
     var viewed: Boolean,
-    var userProfilePic: String
+    var userProfilePic: String,
+    var panicType: String
 
 ) : Parcelable {
-    constructor() : this("", "", "", "", "", "", true, "","",false,"")
+    constructor() : this("", "", "", "", "", "", true, "","",false,"","")
 }

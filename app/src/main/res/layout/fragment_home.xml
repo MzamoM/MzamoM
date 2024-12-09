@@ -1,36 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/fab_margin"
     tools:context=".ui.home.HomeFragment">
 
-    <ImageView
-        android:id="@+id/imgCallHelp"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_centerInParent="true"
-        android:padding="80dp"
-        android:src="@drawable/panic" />
+    <Switch
+        android:id="@+id/switchSecurityStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="Online ?" />
 
-    <ImageView
-        android:visibility="gone"
-        android:padding="80dp"
-        android:src="@drawable/unpanic"
-        android:layout_centerInParent="true"
-        android:id="@+id/imgCancelHelp"
-        android:layout_width="400dp"
-        android:layout_height="400dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:id="@+id/btnCallHelp"
+            android:layout_gravity="center"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/red"
+            android:text="PANIC"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button3"/>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btnCancelHelp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:text="EMERGENCY STOP"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button3"/>
+
+
+        <Button
+            android:id="@+id/btnMonitorMe"
+            android:layout_gravity="center"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="MONITOR ME"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button2"/>
+
+    </LinearLayout>
+
+
 
     <com.google.android.gms.ads.AdView
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adUnitId="@string/adUnitId_live"
-        ads:adSize="BANNER"
         android:id="@+id/adView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/adUnitId_test" />
 
 </RelativeLayout>

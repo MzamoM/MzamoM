@@ -17,7 +17,7 @@ import java.util.*
 class HelpHistoryNotificationAdapter(var context: Context, var helpNotificationList: ArrayList<HelpNotification>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private inner class ViewHolder internal constructor(itemView: View) :
+    private inner class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         var name: TextView = itemView.findViewById(R.id.tvHistoryComment)
@@ -41,7 +41,7 @@ class HelpHistoryNotificationAdapter(var context: Context, var helpNotificationL
     }
 
     private fun epochToIso(dobInMiles: Long): String {
-        return dobInMiles?.let {
+        return dobInMiles.let {
             val sdf = SimpleDateFormat("d MMM, yyyy HH:mm:ss", Locale.getDefault())
             sdf.format(dobInMiles)
         } ?: "Not Found"

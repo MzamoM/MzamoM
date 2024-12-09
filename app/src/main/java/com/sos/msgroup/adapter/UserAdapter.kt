@@ -15,7 +15,7 @@ import com.sos.msgroup.model.User
 class UserAdapter(var context: Context, var usersList: ArrayList<User>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private inner class ViewHolder internal constructor(itemView: View) :
+    private inner class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         var textViewUserFullName: TextView = itemView.findViewById(R.id.tv_UserFullName)
@@ -24,7 +24,7 @@ class UserAdapter(var context: Context, var usersList: ArrayList<User>) :
 
         fun bind(position: Int) {
 
-            if (usersList[position].firstName != null && usersList[position].firstName!!.isNotEmpty()) {
+            if (usersList[position].firstName != null && usersList[position].firstName.isNotEmpty()) {
                 textViewUserFullName.text =
                     usersList[position].firstName + " " + usersList[position].lastName
             }

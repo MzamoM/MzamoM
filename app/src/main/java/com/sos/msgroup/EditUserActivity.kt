@@ -1,13 +1,9 @@
 package com.sos.msgroup
 import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.sos.msgroup.model.User
 import com.squareup.picasso.Picasso
@@ -36,6 +32,8 @@ class EditUserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_user)
         supportActionBar?.title = "Edit User Profile"
         user = intent.getParcelableExtra("user_data")!!
+
+        //security
 
         role = user.type
 
@@ -88,17 +86,28 @@ class EditUserActivity : AppCompatActivity() {
 
         var radioRoleAdmin: RadioButton = findViewById(R.id.rb_roleAdmin)
         var radioRoleCustomer: RadioButton = findViewById(R.id.rb_roleCustomer)
+        var radioRoleSecurity: RadioButton = findViewById(R.id.rb_roleSecurity)
 
         showUserDetails()
 
-        if (role != null && role.isNotEmpty()) {
+        if (role.isNotEmpty()) {
 
             if (role.lowercase() == "customer") {
                 radioRoleCustomer.isChecked = true
                 radioRoleAdmin.isChecked = false
-            }  else {
+                radioRoleSecurity.isChecked = false
+            }
+
+           else if (role.lowercase() == "security") {
+                radioRoleSecurity.isChecked = true
+                radioRoleCustomer.isChecked = false
+                radioRoleAdmin.isChecked = false
+            }
+
+            else {
                 radioRoleAdmin.isChecked = true
                 radioRoleCustomer.isChecked = false
+                radioRoleSecurity.isChecked = false
             }
         }
 
@@ -114,39 +123,39 @@ class EditUserActivity : AppCompatActivity() {
 
     private fun showUserDetails() {
 
-        if (user.profileImage != null && user.profileImage.isNotEmpty()) {
+        if (user.profileImage.isNotEmpty()) {
             Picasso.get().load(user.profileImage)
                 .placeholder(R.drawable.ic_default_user)
                 .into(profilePictureImageViewEdit)
         }
 
-        if (user.nextKinFirstName!!.isNotBlank()) {
+        if (user.nextKinFirstName.isNotBlank()) {
             editTextNextKinFirstNameEdit.setText(user.nextKinFirstName)
         }
 
-        if (user.nextKinLastName!!.isNotBlank()) {
+        if (user.nextKinLastName.isNotBlank()) {
             editTextNextKinLastNameEdit.setText(user.nextKinLastName)
         }
 
-        if (user.nextKinPhone!!.isNotBlank()) {
+        if (user.nextKinPhone.isNotBlank()) {
             editTextNextKinPhoneEdit.setText(user.nextKinPhone)
         }
 
-        if (user.firstName!!.isNotBlank()) {
+        if (user.firstName.isNotBlank()) {
             editTextFirstName.setText(user.firstName)
         }
 
-        if (user.lastName!!.isNotBlank()) {
+        if (user.lastName.isNotBlank()) {
             editTextLastName.setText(user.lastName)
         }
 
 
-        if (user.phoneNumber!!.isNotBlank()) {
+        if (user.phoneNumber.isNotBlank()) {
             editTextPhoneNumber.setText(user.phoneNumber)
         }
 
 
-        if (user.email!!.isNotBlank()) {
+        if (user.email.isNotBlank()) {
             editTextEmail.setText(user.email)
         }
     }

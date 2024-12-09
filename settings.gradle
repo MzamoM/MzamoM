@@ -15,6 +15,8 @@ dependencyResolutionManagement {
 
         // Configure the Maven repository address for the HMS Core SDK.
         maven { url 'https://developer.huawei.com/repo/' }
+        maven { url 'https://jitpack.io' }
+
     }
 }
 rootProject.name = "MS GROUP"

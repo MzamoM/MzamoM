@@ -152,7 +152,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         messageBoxInstance.setCancelable(false)
 
         //set Listener
-        save.setOnClickListener(){
+        save.setOnClickListener {
             //close dialog
             if(comment !=null ){
                 cancelHelpRequest("This request has been closed and achieved",comment.text.toString())

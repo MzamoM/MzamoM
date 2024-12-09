@@ -36,7 +36,7 @@ class HelpHistoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHelpHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -75,7 +75,7 @@ class HelpHistoryFragment : Fragment() {
 
                     var helpNotification = childSnapshot.getValue(HelpNotification::class.java)
 
-                    if (helpNotification != null && helpNotification.userId == FirebaseAuth.getInstance()?.uid.toString()) {
+                    if (helpNotification != null && helpNotification.userId == FirebaseAuth.getInstance().uid.toString()) {
                         helpNotifications.add(helpNotification)
                     }
                 }

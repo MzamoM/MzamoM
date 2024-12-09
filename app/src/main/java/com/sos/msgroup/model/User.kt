@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 data class User(
     var type: String, var ID_Number: String, var firstName: String, var lastName: String,
     var gender: String, var phoneNumber: String, var email: String, var id:String, var profileImage:String,
-    var userCaptured: Boolean, var password:String,var nextKinFirstName:String,var nextKinLastName:String,var nextKinPhone:String
+    var userCaptured: Boolean, var password:String,var nextKinFirstName:String,var nextKinLastName:String,var nextKinPhone:String, var canPanic:Boolean
 ) : Parcelable {
-    constructor(): this ("","","","","","","","","",false,"","","","")
+    constructor(): this ("","","","","","","","","",false,"","","","",true)
 }

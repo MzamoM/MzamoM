@@ -25,11 +25,12 @@ class HelpNotificationAdapter(
     var helpNotificationList: ArrayList<HelpNotification>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private inner class ViewHolder internal constructor(itemView: View) :
+    private inner class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         var name: TextView = itemView.findViewById(R.id.TvNames)
         var date: TextView = itemView.findViewById(R.id.TvDateTime)
+        var panicType: TextView = itemView.findViewById(R.id.TvUserPanicType)
         var image: ImageView = itemView.findViewById(R.id.ImgLocation)
         var imageIconStatus: ImageView = itemView.findViewById(R.id.ImgIconStatus)
 
@@ -40,6 +41,7 @@ class HelpNotificationAdapter(
             name.text =
                 helpNotificationList[position].firstName + " " + helpNotificationList[position].lastName
             date.text = epochToIso(helpNotificationList[position].time.toLong())
+            panicType.text = helpNotificationList[position].panicType +""
 
             if (helpNotificationList[position].viewed) {
                 imageIconStatus.visibility = View.GONE
@@ -95,7 +97,7 @@ class HelpNotificationAdapter(
     }
 
     private fun epochToIso(dobInMiles: Long): String {
-        return dobInMiles?.let {
+        return dobInMiles.let {
             val sdf = SimpleDateFormat("d MMM, yyyy HH:mm:ss", Locale.getDefault())
             sdf.format(dobInMiles)
         } ?: "Not Found"

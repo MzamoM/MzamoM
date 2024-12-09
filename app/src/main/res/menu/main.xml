@@ -9,10 +9,17 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_online_security"
+        android:orderInCategory="100"
+        android:icon="@drawable/securityguard"
+        android:title="@string/action_online_security"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_Share"
         android:icon="@drawable/ic_baseline_share_24"
         android:title="Share"
-        app:showAsAction="always"/>
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_delete"

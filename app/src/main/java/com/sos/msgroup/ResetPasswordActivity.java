@@ -62,14 +62,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                startActivity(new Intent(this,LoginActivity.class));
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            startActivity(new Intent(this, LoginActivity.class));
+            this.finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 }

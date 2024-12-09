@@ -61,7 +61,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/asul"
-                android:text="Company Reg no. – 2017/242498/07"
+                android:text="Company Reg no. – 2024/593361/07"
                 android:textColor="@android:color/holo_red_light" />
 
             <TextView
@@ -165,9 +165,21 @@
                 android:fontFamily="@font/asul"
                 android:text="Security Analysis" />
 
+
+
+            <ImageView
+               android:id="@+id/imgWebsite"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/website_icons"/>
+
         </LinearLayout>
 
     </ScrollView>
+
+
 
     <TextView
         android:layout_width="wrap_content"

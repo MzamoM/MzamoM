@@ -2,7 +2,6 @@ package com.sos.msgroup
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -63,12 +62,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_gallery,
                 R.id.nav_profile,
                 R.id.nav_history,
-                R.id.nav_emergency
+                R.id.nav_emergency,
+                R.id.nav_payment,
+                R.id.nav_subscription
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
 
 
         initializeDbRef()
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCurrentUserRole() {
 
-        var myRef: DatabaseReference = database.child("users").child(FirebaseAuth.getInstance()?.uid.toString())
+        var myRef: DatabaseReference = database.child("users").child(FirebaseAuth.getInstance().uid.toString())
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -131,6 +131,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+
+            R.id.action_online_security -> {
+                val intent = Intent(this, OnlineSecurityMapsActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
             R.id.action_settings -> {
                 val intent = Intent(this, AdminNotificationActivity::class.java)
                 startActivity(intent)
@@ -143,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                     setMessage("Are you sure you want to delete your account?")
 
                     setPositiveButton("Yes") { _, _ ->
-                        deleteUserAccount(user.email,user.password)
+                        deleteUserAccount(user.email, user.password)
                     }
 
                     setNegativeButton("No") { _, _ ->

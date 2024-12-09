@@ -71,10 +71,10 @@ class RegisterActivity : AppCompatActivity() {
                         "male",
                         phone,
                         email,
-                        FirebaseAuth.getInstance()?.uid.toString(),
+                        FirebaseAuth.getInstance().uid.toString(),
                         "",
                         false,
-                        "","","",""
+                        "","","","",true
                     )
                     saveNewUser(user)
                 }

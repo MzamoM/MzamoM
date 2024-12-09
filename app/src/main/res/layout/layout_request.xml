@@ -38,6 +38,15 @@
             android:textStyle="italic|bold" />
 
         <TextView
+            android:id="@+id/TvUserPanicType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic|bold"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/ImgLocation" />
+
+        <TextView
             android:id="@+id/TvDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

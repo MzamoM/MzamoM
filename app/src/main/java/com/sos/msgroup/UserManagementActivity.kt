@@ -100,14 +100,15 @@ class UserManagementActivity : AppCompatActivity() {
 
                 val layoutManager = GridLayoutManager(this@UserManagementActivity, 1)
 
-                userAdapter = this@UserManagementActivity?.let {
+                userAdapter = this@UserManagementActivity.let {
                     UserAdapter(it, usersList)
-                }!!
+                }
                 recyclerView.setHasFixedSize(true)
                 recyclerView.layoutManager = layoutManager
                 recyclerView.adapter = userAdapter
 
                 progressDialog.hide()
+                progressDialog.dismiss()
             }
 
             override fun onCancelled(error: DatabaseError) {
